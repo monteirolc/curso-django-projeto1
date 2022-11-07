@@ -1,2 +1,2 @@
 pip setuptools wheel --upgrade
-django
+django 
