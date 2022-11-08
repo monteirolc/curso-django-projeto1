@@ -2,3 +2,4 @@ pip --upgrade
 setuptools --upgrade
 wheel --upgrade
 django 
+pillow
