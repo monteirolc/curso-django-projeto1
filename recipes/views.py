@@ -37,6 +37,6 @@ def recipe(request, id):
     recipe = get_object_or_404(Recipe, pk=id, is_published=True)
     return render(request, 'recipes/pages/recipe-view.html', context={
         'recipe': recipe,
-        'title': f'{recipe.title}',
+        'title': recipe.title,
         'is_detail_page': True,
     })
