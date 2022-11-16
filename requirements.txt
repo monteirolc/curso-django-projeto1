@@ -1,5 +1,7 @@
-pip --upgrade
-setuptools --upgrade
-wheel --upgrade
 django 
 pillow
+setuptools
+wheel
+autopep8
+mypy  
+flake8
