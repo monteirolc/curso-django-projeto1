@@ -1,5 +1,5 @@
 # from django.http import Http404
-from django.shortcuts import get_list_or_404, render, get_object_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404, render
 
 from .models import Recipe
 
@@ -10,9 +10,8 @@ from .models import Recipe
 
 
 def home(request):
-    recipes = get_list_or_404(
-        Recipe.objects.filter(is_published=True,).order_by('-id')
-    )
+    recipes = Recipe.objects.filter(is_published=True,).order_by('-id')
+
     return render(request, 'recipes/pages/home.html', context={
         'recipes': recipes,
     })
