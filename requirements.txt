@@ -8,3 +8,5 @@ flake8
 pytest
 pytest-django
 pytest_watch
+parameterized
+coverage
