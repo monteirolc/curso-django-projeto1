@@ -1,9 +1,11 @@
-from django.core.exceptions import ValidationError
-from parameterized import parameterized
-from unittest import skip
 from time import sleep
 
+from django.core.exceptions import ValidationError
+from parameterized import parameterized
+
 from .test_recipe_base import Recipe, RecipeTestBase
+
+# from unittest import skip
 
 
 class RecipeModelTest(RecipeTestBase):
@@ -18,7 +20,7 @@ class RecipeModelTest(RecipeTestBase):
                 username='Johnjohnjohn', email='mail@john.com'),
             title='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug',
+            slug='recipe-slug-for-no-default',
             preparation_time=10,
             preparation_time_unit='Minutos',
             servings=5,
@@ -36,15 +38,11 @@ class RecipeModelTest(RecipeTestBase):
         with self.assertRaises(ValidationError):
             self.recipe.full_clean()
 
-    @skip('Código dando erro ao executar// Este test já está passando')
     def test_recipe_preparation_steps_is_html_is_false_by_default(self):
         sleep(1)
         recipe = self.make_recipe_defaults()
-        sleep(1)
-        self.fail(recipe.preparation_steps_is_html)
         self.assertFalse(recipe.preparation_steps_is_html)
 
-    @skip('Código dando erro ao executar// Este test já está passando')
     def test_recipe_is_published_is_false_by_default(self):
         recipe = self.make_recipe_defaults()
         self.assertFalse(recipe.is_published)
