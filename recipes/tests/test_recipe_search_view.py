@@ -60,8 +60,8 @@ class RecipeSearchViewsTest(RecipeTestBase):
         self.assertIn(recipe2, response_both.context['recipes'])
 
     def test_recipe_search_can_find_recipe_by_description(self):
-        description1 = 'this is recipe one'
-        description2 = 'this is recipe two'
+        description1 = 'this is recipe description one'
+        description2 = 'this is recipe description two'
         recipe1 = self.make_recipe(
             slug='one_recipe_test_for_a_title_one',
             description=description1,
