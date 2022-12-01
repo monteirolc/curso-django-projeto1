@@ -10,3 +10,4 @@ pytest-django
 pytest_watch
 parameterized
 coverage
+python-dotenv
