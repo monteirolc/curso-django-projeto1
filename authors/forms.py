@@ -4,8 +4,6 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-DICT = {'1234'}
-
 
 def add_attr(field, attr_name, attr_new_val):
     existing = field.widget.attrs.get(attr_name, '')
@@ -36,30 +34,56 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Your e-mail')
         add_placeholder(self.fields['first_name'], 'Ex.: John')
         add_placeholder(self.fields['last_name'], 'Ex.: Doe')
+        add_placeholder(self.fields['password'], 'Type your password here')
+        add_placeholder(self.fields['password2'], 'Repeat your password')
+
         add_attr(self.fields['username'], 'css', 'a-css-class')
 
+    last_name = forms.CharField(
+        label='Last name',
+        error_messages={'required': 'Last name is required'},
+        help_text='Enter up to 150 chars',
+    )
+
+    first_name = forms.CharField(
+        label='First name',
+        error_messages={'required': 'First name is required'},
+        help_text='Enter up to 150 chars'
+    )
+
     password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Your password'
-        }),
-        error_messages={
-            'required': 'Password must not be empty'
-        },
+        error_messages={'required': 'Password must not be empty'},
         help_text=(
             'Password must have at least one uppercase letter, '
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'
         ),
-        validators=[strong_password]
+        validators=[strong_password],
+        label='Password'
     )
 
     password2 = forms.CharField(
-        required=True,
         label='Password confirmation',
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Repeat your password'
-        }),
+        error_messages={'required': 'Password confirmation must not be empty'},
+
+    )
+
+    email = forms.EmailField(
+        label='E-mail',
+        error_messages={'required': 'E-mail not be empty'},
+        help_text='The e-mail must be valid',
+    )
+
+    username = forms.CharField(
+        label='Username',
+        error_messages={
+            'required': 'Username not be empty, It must have between 3 and 40 chars',  # noqa
+            'min_length': 'Min length is 3',
+            'max_length': 'Max length is 40',
+        },
+        help_text='The username must be valid',
+        min_length=3,
+        max_length=40,
     )
 
     class Meta:
@@ -71,49 +95,13 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]
-        # exclude = []
-
-        labels = {
-            'first_name': 'first_name',
-            'last_name': 'last_name',
-            'username': 'username',
-            'email': 'email',
-            'password': 'password',
-        }
-
-        help_text = {
-            'email': 'The e-mail must be valid',
-        }
 
         error_messages = {
             'username': {
                 'required': 'This field must not be empty',
                 'invalid': 'This field is invalid',
             }
-        }
-
-        widgets = {
-            'first_name': forms.TextInput(attrs={
-                'placeholder': 'Type your first name here',
-                'class': 'outra_classe'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Input your key pass here'
-            })
-        }
-
-    def clean_password(self):
-        data = self.cleaned_data.get('password')
-
-        for i in len(DICT):
-            if DICT[i] in data:
-                raise ValidationError(
-                    "Valor proibido",
-                    code='invalid'
-
-                )
-
-        return data
+        },
 
     def clean(self):
         cleaned_data = super().clean()
