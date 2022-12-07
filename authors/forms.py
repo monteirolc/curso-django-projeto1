@@ -70,7 +70,7 @@ class RegisterForm(forms.ModelForm):
 
     email = forms.EmailField(
         label='E-mail',
-        error_messages={'required': 'E-mail not be empty'},
+        error_messages={'required': 'E-mail not be empty and must be unique.'},
         help_text='The e-mail must be valid',
     )
 
@@ -96,12 +96,16 @@ class RegisterForm(forms.ModelForm):
             'password',
         ]
 
-        error_messages = {
-            'username': {
-                'required': 'This field must not be empty',
-                'invalid': 'This field is invalid',
-            }
-        },
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '')
+        exists = User.objects.filter(email=email).exists()
+
+        if exists:
+            raise ValidationError(
+                'User e-mail is already in use', code='invalid',
+            )
+
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
