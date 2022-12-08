@@ -37,13 +37,18 @@ class RegisterForm(forms.ModelForm):
             'at least 8 characters.'
         ),
         validators=[strong_password],
-        label='Password'
+        label='Password',
+        widget=forms.PasswordInput(
+
+        )
     )
 
     password2 = forms.CharField(
         label='Password confirmation',
         error_messages={'required': 'Password confirmation must not be empty'},
+        widget=forms.PasswordInput(
 
+        )
     )
 
     email = forms.EmailField(
