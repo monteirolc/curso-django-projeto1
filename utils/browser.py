@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from time import sleep
 
@@ -11,6 +12,10 @@ CHROMEDRIVER_PATH = ROOT_PATH/'bin'/CHROMEDRIVER_NAME
 
 def make_chrome_browser(*options):
     chrome_options = webdriver.ChromeOptions()
+
+    if os.environ.get('SELENIUM_HEADLESS'):
+        chrome_options.add_argument('--headless')
+
     if options is not None:
         for option in options:
             chrome_options.add_argument(option)
