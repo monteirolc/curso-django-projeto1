@@ -47,9 +47,7 @@ class RecipeHomeViewsTest(RecipeTestBase):
 
     @patch('recipes.views.PER_PAGE', new=3)
     def test_recipe_home_is_paginated(self):
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
-            self.make_recipe(**kwargs)
+        self.make_recipe_in_batch(8)
 
         response = self.client.get(reverse('recipes:home'))
         recipes = response.context['recipes']
@@ -62,9 +60,7 @@ class RecipeHomeViewsTest(RecipeTestBase):
 
     @patch('recipes.views.PER_PAGE', new=3)
     def test_page_query_invalid_using_page_one_a(self):
-        for i in range(8):
-            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
-            self.make_recipe(**kwargs)
+        self.make_recipe_in_batch(8)
 
         url = reverse('recipes:home')
         response = self.client.get(url + '?page=1A')

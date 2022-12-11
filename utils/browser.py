@@ -1,4 +1,5 @@
 import os
+from distutils.util import strtobool
 from pathlib import Path
 from time import sleep
 
@@ -12,8 +13,8 @@ CHROMEDRIVER_PATH = ROOT_PATH/'bin'/CHROMEDRIVER_NAME
 
 def make_chrome_browser(*options):
     chrome_options = webdriver.ChromeOptions()
-
-    if os.environ.get('SELENIUM_HEADLESS'):
+    val = strtobool(os.environ.get('SELENIUM_HEADLESS'))
+    if val:
         chrome_options.add_argument('--headless')
 
     if options is not None:

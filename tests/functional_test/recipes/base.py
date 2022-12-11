@@ -1,13 +1,15 @@
+
 from time import sleep
 
 # from django.test import LiveServerTestCase  #SEM O CSS
 from django.contrib.staticfiles.testing import \
     StaticLiveServerTestCase  # COM O CSS
 
+from recipes.tests.test_recipe_base import RecipeMixing
 from utils.browser import make_chrome_browser as cbrowser
 
 
-class RecipeBaseFunctionalTest(StaticLiveServerTestCase):
+class RecipeBaseFunctionalTest(StaticLiveServerTestCase, RecipeMixing):
     def setUp(self) -> None:
         self.browser = cbrowser()
         return super().setUp()
