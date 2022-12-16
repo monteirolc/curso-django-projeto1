@@ -7,10 +7,11 @@
         <h2>Login</h2>
        {% include 'authors/partials/login_message.html' %}
     </div>
-    
     {% include 'global/partials/messages.html' %}
+    {% if not user.is_authenticaed %}
+        {% include 'global/partials/form.html' %}
+    {% endif %}
 
-   {% include 'global/partials/form.html' %}
 {% endblock content %}
 
 

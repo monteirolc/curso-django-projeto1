@@ -3,13 +3,41 @@
 {% block title %}Dashboard | {% endblock title %}
 
 {% block content %}
-    <div class="main-content center container">
-        <h2>Dashboard ({{ user}})</h2>
-       {% include 'authors/partials/login_message.html' %}
+<div class="main-content center container">
+    <h2>Dashboard ({{ user}})</h2>
+    {% include 'authors/partials/login_message.html' %}
+    {% include 'global/partials/messages.html' %}
 
+       <div class="authors-dashboard-container">
+        <h3>Your recipes</h3>
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <a href="{% url 'authors:dashboard_edit' recipe.id %}">{{ recipe.title }}</a>
+                    <form class="inline-form form-delete" action="{% url 'authors:dashboard_delete' recipe.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value={{recpe.id}}>
+                        <button class="plaintext-button"   type="submit">
+                            <i class="fa fa-solid fa-trash" style="padding-left: 6px; color: #da525d;"></i>
+                        </button>
+                    </form>  
+                </li>
+            {% empty %}
+                <li>
+                    <p>You do not have a recipes yet, please create yours then!</p>
+                </li>
+            {% endfor %}
+        </ul>
+       </div>
+       <div class="container">
+            <div class="center">
+                <a href="{% url 'authors:dashboard_view' %}" id="circle-plus">
+                 +  
+                </a>
+            </div>
+       </div>
     </div>
     
-    {% include 'global/partials/messages.html' %}
 
 {% endblock content %}
 
