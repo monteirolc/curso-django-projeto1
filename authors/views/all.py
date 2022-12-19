@@ -5,10 +5,9 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from authors.forms import AuthorRecipeForm, LoginForm, RegisterForm
 from recipes.models import Recipe
 from utils import my_slug
-
-from .forms import AuthorRecipeForm, LoginForm, RegisterForm
 
 
 def register_view(request):
