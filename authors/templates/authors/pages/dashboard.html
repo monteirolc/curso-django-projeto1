@@ -14,7 +14,7 @@
             {% for recipe in recipes %}
                 <li>
                     <a href="{% url 'authors:dashboard_edit' recipe.id %}">{{ recipe.title }}</a>
-                    <form class="inline-form form-delete" action="{% url 'authors:dashboard_delete' recipe.id %}" method="POST">
+                    <form class="inline-form form-delete" action="{% url 'authors:dashboard_delete'%}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="id" value={{recpe.id}}>
                         <button class="plaintext-button"   type="submit">
@@ -31,7 +31,7 @@
        </div>
        <div class="container">
             <div class="center">
-                <a href="{% url 'authors:dashboard_view' %}" id="circle-plus">
+                <a href="{% url 'authors:dashboard_new' %}" id="circle-plus">
                  +  
                 </a>
             </div>
