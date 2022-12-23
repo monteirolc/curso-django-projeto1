@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
-ALLOWED_HOSTS: List[str] = []
+ALLOWED_HOSTS: List[str] = [] if DEBUG == True else ['*']
 
 # Application definition
 
@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get('DATABASE_ENGINE_DEBUG') if DEBUG == True else os.environ.get('DATABASE_ENGINE'),  # noqa
+        'NAME': os.environ.get('DATABASE_NAME_DEBUG') if DEBUG == True else os.environ.get('DATABASE_NAME'),  # noqa
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
     }
 }
 
