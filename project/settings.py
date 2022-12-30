@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # My apps
     'recipes',
     'authors',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
