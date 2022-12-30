@@ -131,3 +131,6 @@ db copy.sqlite3
 static/
 key_generation.py
 chromedriver
+deploy/
+.dockerignore
+Dockerfile
