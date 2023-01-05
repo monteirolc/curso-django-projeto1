@@ -10,8 +10,8 @@ class TagAdmin(admin.ModelAdmin):
     list_display_links = 'id', 'slug'
     search_fields = 'id', 'name', 'slug'
     list_per_page = 10
-    list_editable = 'name'
-    ordering = '-id'
+    list_editable = ('name',)
+    ordering = ('-id',)
     prepopulated_fields = {
         'slug': ('name',),
     }
