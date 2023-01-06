@@ -1,0 +1,16 @@
+{% extends 'global/base.html' %}
+
+{% block title %}Profile | {% endblock title %}
+
+{% block content %}
+    <div class="main-content center container">
+        <h2>Profile | {{ profile.author.username }}</h2>
+        <p>{{ profile.bio }}</p>
+    </div>
+    
+    {% include 'global/partials/messages.html' %}
+
+   {% include 'global/partials/form.html' %}
+{% endblock content %}
+
+
