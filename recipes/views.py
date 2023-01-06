@@ -5,6 +5,8 @@ from os import environ
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
+from django.utils import translation
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 
 from tag.models import Tag
@@ -29,16 +31,18 @@ class RecipeListViewBase(ListView):
             is_published=True,
         )
         qs = qs.select_related('author', 'category')
-        qs = qs.prefetch_related('tags')
+        qs = qs.prefetch_related('tags', 'author__profile')
         return qs
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         page_obj, pagination_range = make_pagination(
             self.request, context.get('recipes'), PER_PAGE, 6)
+        html_language = translation.get_language()
         context.update({
             'recipes': page_obj,
             'pagination_range': pagination_range,
+            'html_language': html_language,
         })
         return context
 
@@ -76,8 +80,9 @@ class RecipeListViewCategory(RecipeListViewBase):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         recipes = context.get('recipes')
+        transl = _('Category')
         context.update({
-            'title': f'{recipes[0].category.name} - Category | ',
+            'title': f'{recipes[0].category.name} - {transl} | ',
         })
         return context
 
